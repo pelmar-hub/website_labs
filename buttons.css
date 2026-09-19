@@ -1,0 +1,33 @@
+.btn-signin {
+    font-weight: 500;
+    color: #0B132A;
+}
+
+.btn-signup {
+    color: #F53838;
+    border: 1px solid #F53838;
+    padding: 10px 30px;
+    border-radius: 50px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.btn-signup:hover {
+    background-color: #F53838;
+    color: #FFF;
+}
+
+.btn-primary {
+    display: inline-block;
+    background-color: #F53838;
+    color: #FFF;
+    padding: 15px 50px;
+    border-radius: 10px;
+    font-weight: 700;
+    box-shadow: 0 20px 30px -10px rgba(245, 56, 56, 0.4);
+    transition: transform 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+}

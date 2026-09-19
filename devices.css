@@ -1,0 +1,81 @@
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px 0;
+    }
+    .header__nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+    .auth-buttons {
+        width: 100%;
+        justify-content: center;
+    }
+    main .hero, .features {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+        padding: 0 20px;    
+    }
+    .hero-image, .features-image {
+        justify-content: center;
+    }
+    .features-content {
+        padding-left: 0;
+    }
+    .features-list {
+        text-align: left;
+        display: inline-block;
+    }
+    .cards-wrapper {
+        flex-direction: column;
+    }
+    .subscribe-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+        padding: 30px 20px;
+    }
+    .footer-content {
+        flex-direction: column;
+        gap: 40px;
+        text-align: center;
+    }
+    .footer-copyright, 
+    .footer .logo, 
+    .socials {
+        justify-content: center;
+        text-align: center;
+    }
+}
+@media (max-width: 375px) {
+    .hero-content h1 {
+        font-size: 32px;
+    }
+    .features-content h2,
+    .section-header h2,
+    .subscribe-text h2 {
+        font-size: 26px;
+    }
+    .btn-primary {
+        padding: 12px 30px;
+    }
+}
+@media (max-width: 1920px){
+    .container {
+        max-width: 1440px;
+    }
+    .hero-content h1 {
+        font-size: 64px;
+        max-width: 700px;
+    }
+    .hero-content p,
+    .features-content p,
+    .reviews-text{
+        font-size: 18px;
+    }
+}
+
+   
