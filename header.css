@@ -36,9 +36,6 @@
     transition: color 0.3s;
 }
 
-.header__nav-item a:hover {
-    color: #F53838;
-}
 
 .auth-buttons {
     display: flex;
