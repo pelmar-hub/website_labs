@@ -131,10 +131,6 @@ main .hero {
     transition: all 0.3s;
 }
 
-.card.active, .card:hover {
-    border-color: #F53838;
-    box-shadow: 0 20px 30px -10px rgba(11, 19, 42, 0.05);
-}
 
 .card-header {
     display: flex;
