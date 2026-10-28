@@ -45,3 +45,10 @@
     align-items: center;
     gap: 30px;
 }
+.menu-toggle {
+    display: none;
+}
+
+.burger-btn {
+    display: none;
+}
