@@ -1,9 +1,8 @@
-// 1. БАЗА ДАНИХ ТЕПЕР НА СЕРВЕРІ
+
 const API_URL = 'http://localhost:3000/api/shoes';
-let shoes = []; // Масив порожній, ми заповнимо його з сервера
+let shoes = []; 
 let editingId = null; 
 
-// 2. ЗНАХОДИМО ЕЛЕМЕНТИ В DOM
 const viewList = document.getElementById('view-list');
 const viewCreate = document.getElementById('view-create');
 const btnShowList = document.getElementById('btn-show-list');
@@ -15,7 +14,6 @@ const totalSumEl = document.querySelector('.total-value');
 const sortCheckbox = document.getElementById('sort-checkbox');
 const createForm = document.getElementById('create-form');
 
-// 3. НАВІГАЦІЯ
 btnShowCreate.addEventListener('click', () => {
   viewList.classList.add('hidden');
   viewCreate.classList.remove('hidden');
@@ -30,7 +28,6 @@ btnShowList.addEventListener('click', () => {
   btnShowCreate.classList.remove('active');
 });
 
-// 4. ВІДОБРАЖЕННЯ КАРТОК
 function renderCards(arrayToRender) {
   cardsGrid.innerHTML = ''; 
 
@@ -53,10 +50,7 @@ function renderCards(arrayToRender) {
   cardsGrid.insertAdjacentHTML('beforeend', cardsHTML);
 }
 
-// 5. ОПЕРАЦІЇ З СЕРВЕРОМ (CRUD)
 
-// READ (GET) - Завантаження даних
-// Оновлена функція завантаження з підтримкою параметрів
 async function loadShoes(searchQuery = '') {
   try {
     const url = searchQuery ? `${API_URL}?search=${searchQuery}` : API_URL;
@@ -67,17 +61,14 @@ async function loadShoes(searchQuery = '') {
     console.error('Помилка завантаження:', error);
   }
 }
-// DELETE - Видалення
 window.removeShoe = async function(idToRemove) {
   await fetch(`${API_URL}/${idToRemove}`, { 
     method: 'DELETE' 
   });
-  
-  // Після видалення на сервері, завантажуємо оновлений список
+
   loadShoes();
 };
 
-// CREATE & UPDATE (POST / PUT) - Форма
 createForm.addEventListener('submit', async (event) => {
   event.preventDefault(); 
 
@@ -90,7 +81,6 @@ createForm.addEventListener('submit', async (event) => {
   };
 
   if (editingId !== null) {
-    // РЕЖИМ РЕДАГУВАННЯ (PUT запит)
     await fetch(`${API_URL}/${editingId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -101,7 +91,6 @@ createForm.addEventListener('submit', async (event) => {
     document.querySelector('#create-form h3').innerText = 'Create card';
     document.querySelector('#create-form button[type="submit"]').innerText = 'Submit';
   } else {
-    // РЕЖИМ СТВОРЕННЯ (POST запит)
     await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -111,10 +100,8 @@ createForm.addEventListener('submit', async (event) => {
 
   createForm.reset(); 
   btnShowList.click(); 
-  loadShoes(); // Оновлюємо інтерфейс новими даними з сервера
+  loadShoes(); 
 });
-
-// 6. ІНШІ ФУНКЦІЇ (Працюють з локальною копією завантажених даних)
 btnCount.addEventListener('click', () => {
   const total = shoes.reduce((sum, shoe) => sum + shoe.price, 0);
   totalSumEl.innerText = `₴${total}`;
@@ -133,15 +120,14 @@ const searchInput = document.querySelector('.search-input');
 const btnSearch = document.querySelector('.btn-search');
 const btnClear = document.querySelector('.btn-clear');
 
-// Оновлені обробники кнопок пошуку
 btnSearch.addEventListener('click', () => {
   const searchText = searchInput.value.trim();
-  loadShoes(searchText); // Відправляємо запит на сервер із текстом
+  loadShoes(searchText); 
 });
 
 btnClear.addEventListener('click', () => {
   searchInput.value = ''; 
-  loadShoes(); // Завантажуємо весь список без параметрів
+  loadShoes(); 
 });
 
 window.editShoe = function(id) {
@@ -157,6 +143,4 @@ window.editShoe = function(id) {
   document.querySelector('#create-form button[type="submit"]').innerText = 'Save Changes';
   btnShowCreate.click();
 };
-
-// 7. СТАРТ ПРОГРАМИ
 loadShoes();
