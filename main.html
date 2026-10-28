@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boots</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Верхнє меню -->
+    <header class="top-nav">
+      <div class="nav-left">
+        <div class="logo">My App</div>
+        <button id="btn-show-list" class="tab-btn active">My Boots</button>
+        <button id="btn-show-create" class="tab-btn">Create Boots</button>
+      </div>
+      
+      <div class="nav-right">
+        <input type="text" placeholder="Type something..." class="search-input">
+        <button class="btn-search">Search</button>
+        <button class="btn-clear">Clear</button>
+      </div>
+    </header>
+
+
+    <main id="view-list" class="main-content">
+      
+
+      <aside class="sidebar">
+        <h2>Manage cards</h2>
+        
+        <div class="sort-box">
+          <span class="sort-text">Sort by the most<br>expensive</span>
+          <label class="switch">
+            <input type="checkbox" id="sort-checkbox">
+            <span class="slider round"></span>
+          </label>
+        </div>
+
+        <hr class="divider">
+
+        <div class="count-box">
+          <p class="count-label">Count total expenses:</p>
+          <button class="btn-count">Count</button>
+          <div class="total-row">
+            <span>Total expenses:</span>
+            <span class="total-value">$0</span>
+          </div>
+        </div>
+      </aside>
+
+      <section class="cards-area" id="cards-grid">
+
+      </section>
+
+    </main>
+
+
+    <div id="view-create" class="form-section hidden">
+      <form id="create-form" class="custom-form">
+        <h3>Create card</h3>
+        
+        <div class="form-group">
+          <label for="title_input">Назва</label>
+          <input type="text" id="title_input" required />
+        </div>
+        
+        <div class="form-group">
+          <label for="price_input">Ціна</label>
+          <input type="number" id="price_input" min="0" step="100" placeholder="0" required />
+        </div>
+        
+        <div class="form-group">
+          <label>Розмір (від і до)</label>
+          <div class="row-flex">
+            <input type="number" id="size_from" placeholder="Від" min="36" step="1" max="46" required>
+            <input type="number" id="size_to" placeholder="До" min="36" step="1" max="46" required>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="color_input">Колір</label>
+          <select id="color_input">
+            <option value="gre">зелений</option>
+            <option value="blu">синій</option>
+            <option value="red">червоний</option>
+            <option value="yel">жовтий</option>
+            <option value="pur">фіолетовий</option>
+            <option value="blu">блакитний</option>
+            <option value="oli">olive</option>
+            <option value="whi">білий</option>
+          </select>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit</button>
+      </form>
+    </div>
+
+  </div>
+
+  <script src="./js/app.js"></script>
+</body>
+</html>
