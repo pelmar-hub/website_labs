@@ -1,21 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { TOOLS_DATA } from '../data/tools';
+import { toolsApi } from '../api/toolsApi';
+import Loader from '../components/Loader';
 import PrimaryButton from '../components/PrimaryButton';
 import { Cpu, ShieldCheck, ArrowLeft, CheckCircle2, Wifi, Wrench } from 'lucide-react';
 
 export default function ItemPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [tool, setTool] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // Знаходимо інструмент за ID з маршруту
-  const tool = TOOLS_DATA.find((item) => item.id === id);
+  // Отримання даних товару з REST API через Axios (Вимога Лаб 9)
+  useEffect(() => {
+    setLoading(true);
+    toolsApi.getToolById(id)
+      .then((data) => setTool(data))
+      .catch((err) => console.error("Помилка завантаження інструмента:", err))
+      .finally(() => setLoading(false));
+  }, [id]);
+
+  if (loading) {
+    return <Loader text="Отримання статусу комірки з сервера..." />;
+  }
 
   if (!tool) {
     return (
       <div className="text-center py-16 space-y-4">
         <h2 className="text-2xl font-bold text-white">Інструмент не знайдено</h2>
-        <p className="text-xs text-slate-400">Можливо, комірку було розформовано або змінено ідентифікатор.</p>
+        <p className="text-xs text-slate-400">Можливо, комірку постамату було змінено.</p>
         <PrimaryButton onClick={() => navigate('/catalog')}>
           Повернутися до каталогу
         </PrimaryButton>
@@ -34,7 +47,6 @@ export default function ItemPage() {
       </button>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-slate-800/40 border border-slate-700/60 p-6 sm:p-8 rounded-3xl">
-        {/* Зображення інструмента та статус комірки */}
         <div className="space-y-4">
           <div className="relative h-80 sm:h-96 rounded-2xl overflow-hidden bg-slate-950 border border-slate-800">
             <img
@@ -56,7 +68,6 @@ export default function ItemPage() {
           </div>
         </div>
 
-        {/* Детальний опис та фінансові умови */}
         <div className="flex flex-col justify-between space-y-6">
           <div className="space-y-4">
             <span className="text-xs font-bold uppercase tracking-wider text-amber-400 bg-amber-500/10 px-3 py-1 rounded-lg border border-amber-500/20">
@@ -83,7 +94,7 @@ export default function ItemPage() {
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>Фотофіксація комплектації перед закриттям комірки</span>
+                <span>Фотофіксація стану перед видачею</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400" />
@@ -92,7 +103,6 @@ export default function ItemPage() {
             </div>
           </div>
 
-          {/* Блок вартості та дія */}
           <div className="p-5 bg-slate-900/80 rounded-2xl border border-slate-700/80 space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -111,7 +121,7 @@ export default function ItemPage() {
               onClick={() => navigate('/catalog')}
               className="w-full py-3 text-center"
             >
-              Перейти до вибору в каталозі
+              Перейти до каталогу
             </PrimaryButton>
           </div>
         </div>
