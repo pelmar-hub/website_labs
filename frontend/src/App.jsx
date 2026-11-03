@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage';
 import CatalogPage from './pages/CatalogPage';
 import CartPage from './pages/CartPage';
 import LoginPage from './pages/LoginPage';
+import ItemPage from './pages/ItemPage';
 import ProtectedRoute from './components/ProtectedRoute';
 
 export default function App() {
@@ -15,10 +16,8 @@ export default function App() {
         <Header />
         <main className="flex-1 max-w-6xl mx-auto w-full px-4 py-8">
           <Routes>
-            {/* Публічний маршрут входу */}
             <Route path="/login" element={<LoginPage />} />
 
-            {/* Захищені маршрути (Лабораторна 12) */}
             <Route path="/" element={
               <ProtectedRoute>
                 <HomePage />
@@ -29,13 +28,18 @@ export default function App() {
                 <CatalogPage />
               </ProtectedRoute>
             } />
+            {/* Маршрут окремого товару (Лабораторна 8) */}
+            <Route path="/item/:id" element={
+              <ProtectedRoute>
+                <ItemPage />
+              </ProtectedRoute>
+            } />
             <Route path="/cart" element={
               <ProtectedRoute>
                 <CartPage />
               </ProtectedRoute>
             } />
 
-            {/* Редирект на головну для будь-яких невідомих URL */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
