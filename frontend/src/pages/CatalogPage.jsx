@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { addToCart, removeFromCart } from '../redux/actions';
 import { toolsApi } from '../api/toolsApi';
 import ToolCard from '../components/ToolCard';
 import Select from '../components/Select';
@@ -10,7 +12,11 @@ export default function CatalogPage() {
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const [cartIds, setCartIds] = useState([]);
+
+  // Підключення Redux (Лаб 10)
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
+  const cartIds = cartItems.map((item) => item.id);
 
   const categoryOptions = [
     { value: 'all', label: 'Усі категорії' },
@@ -21,21 +27,20 @@ export default function CatalogPage() {
     { value: 'Шуруповерти', label: 'Шуруповерти' },
   ];
 
-  // Завантаження товарів з бекенду через axios (Вимога Лаб 9)
   useEffect(() => {
     setLoading(true);
     toolsApi.getTools(selectedCategory)
       .then((data) => setTools(data))
-      .catch((err) => console.error("Помилка завантаження:", err))
+      .catch((err) => console.error("Помилка:", err))
       .finally(() => setLoading(false));
   }, [selectedCategory]);
 
   const handleToggleCart = (tool) => {
-    setCartIds((prev) =>
-      prev.includes(tool.id)
-        ? prev.filter((id) => id !== tool.id)
-        : [...prev, tool.id]
-    );
+    if (cartIds.includes(tool.id)) {
+      dispatch(removeFromCart(tool.id));
+    } else {
+      dispatch(addToCart(tool));
+    }
   };
 
   const filteredTools = tools.filter((tool) =>
@@ -48,11 +53,11 @@ export default function CatalogPage() {
       <div className="bg-slate-800/40 border border-slate-700/50 p-5 rounded-3xl">
         <div className="flex items-center gap-2 text-amber-500 font-bold text-xs uppercase tracking-wider">
           <Layers className="w-4 h-4" />
-          <span>Каталог постамату (REST API)</span>
+          <span>Каталог постамату</span>
         </div>
         <h2 className="text-2xl font-extrabold text-white mt-1">Доступне обладнання</h2>
         <p className="text-xs text-slate-400">
-          Дані надходять з REST API сервера через Axios із фільтрацією в URL-параметрах
+          Знайдено інструментів: {filteredTools.length} шт. (У кошику Redux: {cartItems.length})
         </p>
       </div>
 
@@ -83,12 +88,11 @@ export default function CatalogPage() {
         </div>
       </div>
 
-      {/* Відображення Loader під час виконання GET-запиту (Вимога Лаб 9) */}
       {loading ? (
         <Loader />
       ) : filteredTools.length === 0 ? (
         <div className="text-center py-12 bg-slate-800/30 rounded-3xl border border-slate-800 text-slate-400 text-sm">
-          Інструментів у даній категорії за вашим запитом не знайдено.
+          Інструментів у даній категорії не знайдено.
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
