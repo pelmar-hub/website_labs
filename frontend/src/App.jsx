@@ -7,6 +7,8 @@ import CatalogPage from './pages/CatalogPage';
 import CartPage from './pages/CartPage';
 import LoginPage from './pages/LoginPage';
 import ItemPage from './pages/ItemPage';
+import CheckoutPage from './pages/CheckoutPage';
+import SuccessPage from './pages/SuccessPage';
 import ProtectedRoute from './components/ProtectedRoute';
 
 export default function App() {
@@ -28,7 +30,6 @@ export default function App() {
                 <CatalogPage />
               </ProtectedRoute>
             } />
-            {/* Маршрут окремого товару (Лабораторна 8) */}
             <Route path="/item/:id" element={
               <ProtectedRoute>
                 <ItemPage />
@@ -37,6 +38,17 @@ export default function App() {
             <Route path="/cart" element={
               <ProtectedRoute>
                 <CartPage />
+              </ProtectedRoute>
+            } />
+            {/* Новые маршруты Лаб 11 */}
+            <Route path="/checkout" element={
+              <ProtectedRoute>
+                <CheckoutPage />
+              </ProtectedRoute>
+            } />
+            <Route path="/success" element={
+              <ProtectedRoute>
+                <SuccessPage />
               </ProtectedRoute>
             } />
 
